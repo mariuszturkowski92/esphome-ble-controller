@@ -29,7 +29,7 @@ void BLEComponentHandlerBase::setup(BLEServer* ble_server) {
   BLEService* service = ble_server->getServiceByUUID(service_UUID);
   if (service == nullptr) {
     service = ble_server->createService(service_UUID);
-    BLEAdvertising *ad = bleServer->getAdvertising();
+    BLEAdvertising *ad = ble_server->getAdvertising();
     ad->addServiceUUID(service_UUID);
   }
 
