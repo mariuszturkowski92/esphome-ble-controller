@@ -33,11 +33,11 @@ void BLEComponentHandlerBase::setup(BLEServer* ble_server) {
 
   // Create the BLE characteristic.
   const string& characteristic_UUID = characteristic_info.characteristic_UUID;
-  if (can_receive_writes()) {
+  // if (can_receive_writes()) {
     characteristic = create_writeable_ble_characteristic(service, characteristic_UUID, this, get_component_description(), characteristic_info.use_BLE2902);
-  } else {
-    characteristic = create_read_only_ble_characteristic(service, characteristic_UUID, get_component_description(), characteristic_info.use_BLE2902);
-  }
+  // } else {
+    // characteristic = create_read_only_ble_characteristic(service, characteristic_UUID, get_component_description(), characteristic_info.use_BLE2902);
+  // }
 
   service->start();
 
