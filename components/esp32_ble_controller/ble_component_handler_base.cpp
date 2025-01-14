@@ -49,7 +49,6 @@ void BLEComponentHandlerBase::setup(BLEServer* ble_server) {
 void BLEComponentHandlerBase::send_value(float value) {
   const string& object_id = component->get_object_id();
   ESP_LOGD(TAG, "Update component %s to %f", object_id.c_str(), value);
-
   characteristic->setValue(value);
   characteristic->notify();
 }
@@ -57,8 +56,13 @@ void BLEComponentHandlerBase::send_value(float value) {
 void BLEComponentHandlerBase::send_value(string value) {
   const string& object_id = component->get_object_id();
   ESP_LOGD(TAG, "Update component %s to %s", object_id.c_str(), value.c_str());
-
-  characteristic->setValue(value);
+   std::vector<uint8_t> data;
+  for (size_t i = 0; i < value.length(); i += 2) {
+    std::string byteString = value.substr(i, 2);
+    uint8_t byte = static_cast<uint8_t>(std::stoi(byteString, nullptr, 16));
+    data.push_back(byte);
+  }
+  characteristic->setValue(data.data(), data.size());
   characteristic->notify();
 }
 
